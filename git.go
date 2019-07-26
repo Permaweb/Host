@@ -24,6 +24,32 @@ func addURL(db *badger.DB, link string) (repo Repo, err error) {
 	return onOldRepo(db, repo)
 }
 
+// rmRepo completely removes any traces of a repository in the system.
+func rmRepo(db *badger.DB, repo Repo) {
+
+	if repo.UUID != "" {
+		rm(repo.UUID)
+	}
+
+	if repo.URL != "" {
+		ipfsKeyRmName(repo.URL)
+		dbDelete(db, repo.URL)
+	}
+
+	if repo.IPFS != "" {
+		ipfsClusterRm(repo.IPFS)
+	}
+
+	if repo.Key != "" {
+		ipfsKeyRm(repo.Key)
+	}
+
+	if repo.IPNS != "" {
+		ipfsKeyRm(repo.IPNS)
+	}
+
+}
+
 func onAllRepos(db *badger.DB) {
 	fmt.Println("Refreshing all repos...")
 	fmt.Println()
@@ -116,23 +142,25 @@ func onOldRepo(db *badger.DB, repo Repo) (Repo, error) {
 func onNewRepo(db *badger.DB, link string) (repo Repo, err error) {
 
 	// URL
-	link = strings.TrimSpace(link)
-	fmt.Println(aurora.Bold("URL :"), aurora.Blue(link))
+	repo.URL = strings.TrimSpace(repo.URL)
+	fmt.Println(aurora.Bold("URL :"), aurora.Blue(repo.URL))
 
 	// UUID
 	buuid, err := uuid.NewRandom()
 	if err != nil {
 		fmt.Println("Couldn't generate a new UUID.")
 		fmt.Println(err.Error())
+		rmRepo(db, repo)
 		return
 	}
 
-	uuid := strings.TrimSpace(buuid.String())
-	fmt.Println(aurora.Bold("UUID :"), uuid)
+	repo.UUID = strings.TrimSpace(buuid.String())
+	fmt.Println(aurora.Bold("UUID :"), repo.UUID)
 
 	// Clone
-	_, err = gitClone(link, uuid)
+	_, err = gitClone(repo.URL, repo.UUID)
 	if err != nil {
+		rmRepo(db, repo)
 		return
 	}
 
@@ -141,6 +169,7 @@ func onNewRepo(db *badger.DB, link string) (repo Repo, err error) {
 	if err != nil {
 		fmt.Println("Couldn't get the size of the git repository.")
 		fmt.Println(err.Error())
+		rmRepo(db, repo)
 		return
 	}
 
@@ -148,47 +177,44 @@ func onNewRepo(db *badger.DB, link string) (repo Repo, err error) {
 	rmax := rmax(size)
 
 	// IPFS-Cluster
-	out, err := ipfsClusterAdd(link, rmin, rmax, uuid)
+	out, err := ipfsClusterAdd(repo.URL, rmin, rmax, repo.UUID)
 	if err != nil {
+		rmRepo(db, repo)
 		return
 	}
 
-	ipfs := strings.TrimSpace(string(out))
-	fmt.Println(aurora.Bold("IPFS :"), aurora.Cyan(ipfs))
+	repo.IPFS = strings.TrimSpace(string(out))
+	fmt.Println(aurora.Bold("IPFS :"), aurora.Cyan(repo.IPFS))
 
 	// Key
-	out, err = ipfsKeyGen(link)
+	out, err = ipfsKeyGen(repo.URL)
 	if err != nil {
+		rmRepo(db, repo)
 		return
 	}
 
-	key := strings.TrimSpace(string(out))
-	fmt.Println(aurora.Bold("Key :"), key)
+	repo.Key = strings.TrimSpace(string(out))
+	fmt.Println(aurora.Bold("Key :"), repo.Key)
 
 	// IPNS
-	out, err = ipfsNamePublish(key, ipfs)
+	out, err = ipfsNamePublish(repo.Key, repo.IPFS)
 	if err != nil {
+		rmRepo(db, repo)
 		return
 	}
 
-	ipns := strings.TrimSpace(string(out))
-	fmt.Println(aurora.Bold("IPNS :"), aurora.Cyan(ipns))
+	repo.IPNS = strings.TrimSpace(string(out))
+	fmt.Println(aurora.Bold("IPNS :"), aurora.Cyan(repo.IPNS))
 
-	repo = Repo{
-		UUID: uuid,
-		URL:  link,
-		IPFS: ipfs,
-		Key:  key,
-		IPNS: ipns,
-	}
-
+	// Save
 	err = dbSet(db, repo)
 	if err != nil {
 		fmt.Println("Couldn't save the newly created repo.")
 		fmt.Println(err.Error())
+		rmRepo(db, repo)
 		return
 	}
 
-	fmt.Println("Saved", aurora.Blue(link).String()+".")
+	fmt.Println("Saved", aurora.Blue(repo.URL).String()+".")
 	return repo, err
 }
