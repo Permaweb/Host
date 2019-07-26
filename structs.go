@@ -11,8 +11,8 @@ type Repo struct {
 	IPNS string // 5. Add it to IPNS
 }
 
-// AddURL is the object accepted by the `/add` API endpoint.
-type AddURL struct {
+// PostRepos is the object accepted by the `/api/repos` API endpoint.
+type PostRepos struct {
 	URL string
 }
 

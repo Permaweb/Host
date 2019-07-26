@@ -185,10 +185,14 @@ func initUser() (path string, err error) {
 func initMux(db *badger.DB) {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/add/", func(w http.ResponseWriter, r *http.Request) { addHandler(db, w, r) }).Methods("POST")
+	r.HandleFunc("/api/repos/{link}", func(w http.ResponseWriter, r *http.Request) { repoGetHandler(db, w, r) }).Methods("GET")
+	r.HandleFunc("/api/repos/{link}", func(w http.ResponseWriter, r *http.Request) { repoDeleteHandler(db, w, r) }).Methods("DELETE")
+	r.HandleFunc("/api/repos", func(w http.ResponseWriter, r *http.Request) { reposGetHandler(db, w, r) }).Methods("GET")
+	r.HandleFunc("/api/repos", func(w http.ResponseWriter, r *http.Request) { reposPostHandler(db, w, r) }).Methods("POST")
+
 	r.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("web").HTTPBox()))
 
-	fmt.Println("Server started at", aurora.Blue("http://localhost:62458/"))
+	fmt.Println("Web server started at", aurora.Blue("http://localhost:62458/"))
 
 	log.Fatal(http.ListenAndServe(":62458", r))
 }
