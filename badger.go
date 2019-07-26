@@ -74,3 +74,9 @@ func badgerGet(db *badger.DB, link string, ch chan Repo) error {
 	close(ch)
 	return err
 }
+
+func badgerDelete(db *badger.DB, link string) error {
+	return db.Update(func(txn *badger.Txn) error {
+		return txn.Delete([]byte(link))
+	})
+}

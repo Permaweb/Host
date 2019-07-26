@@ -28,3 +28,7 @@ func dbList(db *badger.DB) (ch chan repoerr) {
 func dbSet(db *badger.DB, repo Repo) error {
 	return badgerSet(db, repo)
 }
+
+func dbDelete(db *badger.DB, link string) error {
+	return badgerDelete(db, link)
+}
