@@ -3,6 +3,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/Permaweb/Host)](https://goreportcard.com/report/github.com/Permaweb/Host)
 [![GoDoc](https://godoc.org/github.com/Permaweb/Host?status.svg)](https://godoc.org/github.com/Permaweb/Host)
 [![Build Status](https://travis-ci.org/Permaweb/Host.svg?branch=master)](https://travis-ci.org/Permaweb/Host)
+[![CircleCI](https://circleci.com/gh/Permaweb/Host.svg?style=svg)](https://circleci.com/gh/Permaweb/Host)
 
 Takes a Git repository and throws it on IPNS.
 
