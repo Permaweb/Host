@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Changed
 
-* Changed ownership from @NatoBoram to @Permaweb
+* Changed ownership from [@NatoBoram](https://github.com/NatoBoram) to [@Permaweb](https://github.com/Permaweb)
 * Changed name from [Git to IPNS](https://gitlab.com/NatoBoram/git-to-ipfs) to [Permaweb Host](https://github.com/Permaweb/Host)
 * Changed license from [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/) to [MIT](https://choosealicense.com/licenses/mit/)
 
