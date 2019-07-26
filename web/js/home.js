@@ -6,10 +6,10 @@ gi.home = {
 		document.querySelector("#card_result").innerHTML = templates.spinner_grow.render();
 
 		// POST
-		fetch("/api/add/", {
-			method: 'POST',
+		fetch("/api/repos", {
+			method: "POST",
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({ URL: link }),
 		})
