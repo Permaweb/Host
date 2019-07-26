@@ -1,3 +1,5 @@
+// Operations and flow control on Git repositories managed by the application.
+
 package main
 
 import (
@@ -12,38 +14,33 @@ import (
 	"golang.org/x/xerrors"
 )
 
-func receiveURL(db *badger.DB, url string) (repo Repo, err error) {
-	ch := make(chan Repo, 1)
-	err = getFromURL(db, url, ch, onOldRepo, onNewRepo)
-	if err != nil {
-		close(ch)
-		return repo, xerrors.Errorf("Couldn't get a repo from its URL : %w", err)
+func addURL(db *badger.DB, link string) (repo Repo, err error) {
+	repo, err = dbGet(db, link)
+	if xerrors.Is(err, badger.ErrKeyNotFound) {
+		return onNewRepo(db, link)
+	} else if err != nil {
+		return
 	}
-	repo = <-ch
-	return
+	return onOldRepo(db, repo)
 }
 
 func onAllRepos(db *badger.DB) {
 	fmt.Println("Refreshing all repos...")
 	fmt.Println()
 
-	ch := make(chan Repo, runtime.NumCPU())
-
-	go func() {
-		err := getRepos(db, ch)
-		if err != nil {
-			fmt.Println("Couldn't get all known repos.")
-			fmt.Println(err.Error())
-			close(ch)
-		}
-	}()
+	ch := dbList(db)
 
 	var wg sync.WaitGroup
 	for c := 1; c <= runtime.NumCPU(); c++ {
 		wg.Add(1)
-		go func(ch chan Repo) {
-			for repo := range ch {
-				onOldRepo(db, repo)
+		go func(ch chan repoerr) {
+			for re := range ch {
+				if re.err != nil {
+					fmt.Println("Couldn't refresh a repo.")
+					fmt.Println(re.err.Error())
+				}
+
+				onOldRepo(db, re.repo)
 			}
 			wg.Done()
 		}(ch)
@@ -74,10 +71,7 @@ func onOldRepo(db *badger.DB, repo Repo) (Repo, error) {
 	}
 
 	// Remove old IPFS
-	_, err = ipfsClusterRm(repo.IPFS)
-	if err != nil {
-		return repo, err
-	}
+	ipfsClusterRm(repo.IPFS)
 
 	// Size
 	size, err := dirSize(dirHome + dirGit + "/" + repo.UUID)
@@ -108,9 +102,9 @@ func onOldRepo(db *badger.DB, repo Repo) (Repo, error) {
 	repo.IPNS = strings.TrimSpace(string(out))
 	fmt.Println(aurora.Bold("IPNS :"), aurora.Cyan(repo.IPNS))
 
-	err = repo.save(db)
+	err = dbSet(db, repo)
 	if err != nil {
-		fmt.Println("Couldn't save the newly created repo.")
+		fmt.Println("Couldn't save the updated repo.")
 		fmt.Println(err.Error())
 		return repo, err
 	}
@@ -188,7 +182,7 @@ func onNewRepo(db *badger.DB, link string) (repo Repo, err error) {
 		IPNS: ipns,
 	}
 
-	err = repo.save(db)
+	err = dbSet(db, repo)
 	if err != nil {
 		fmt.Println("Couldn't save the newly created repo.")
 		fmt.Println(err.Error())

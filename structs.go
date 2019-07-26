@@ -1,3 +1,5 @@
+// Structures.
+
 package main
 
 // Repo is a user-submitted Git repository.
@@ -12,4 +14,10 @@ type Repo struct {
 // AddURL is the object accepted by the `/add` API endpoint.
 type AddURL struct {
 	URL string
+}
+
+// repoerr is used to make error handling possible on goroutines using `Repo`s.
+type repoerr struct {
+	repo Repo
+	err  error
 }

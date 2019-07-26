@@ -1,3 +1,5 @@
+// Bash commands to be executed by the application.
+
 package main
 
 import (

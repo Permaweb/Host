@@ -1,3 +1,5 @@
+// API
+
 package main
 
 import (
@@ -9,6 +11,8 @@ import (
 )
 
 // errorf writes a swagger-compliant error response.
+//
+// This function was written by Google under the MIT license.
 func errorf(w http.ResponseWriter, code int, format string, a ...interface{}) {
 	var out struct {
 		Code    int    `json:"code"`
@@ -39,7 +43,7 @@ func addHandler(db *badger.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	repo, err := receiveURL(db, received.URL)
+	repo, err := addURL(db, received.URL)
 	if err != nil {
 		errorf(w, http.StatusInternalServerError, "Couldn't properly handle the URL : %v", err)
 		return

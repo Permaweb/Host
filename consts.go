@@ -1,3 +1,5 @@
+// Constants.
+
 package main
 
 import "os"
