@@ -41,8 +41,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 * Changed license from [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/) to [MIT](https://choosealicense.com/licenses/mit/)
 * Spinners are now blue when they're actually doing something and black when they're not
 
-### Deprecated
-
 ### Removed
 
 * Removed the following API endpoint :
@@ -51,8 +49,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ### Fixed
 
 * Fixed some potential issues when refreshing old repositories that contain errors
-
-### Security
 
 ## [1.0.0] - 2019-07-25
 
