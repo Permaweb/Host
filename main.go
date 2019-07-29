@@ -185,14 +185,19 @@ func initUser() (path string, err error) {
 func initMux(db *badger.DB) {
 	r := mux.NewRouter()
 
-	r.HandleFunc("/api/repos/{link}", func(w http.ResponseWriter, r *http.Request) { repoGetHandler(db, w, r) }).Methods("GET")
-	r.HandleFunc("/api/repos/{link}", func(w http.ResponseWriter, r *http.Request) { repoDeleteHandler(db, w, r) }).Methods("DELETE")
-	r.HandleFunc("/api/repos", func(w http.ResponseWriter, r *http.Request) { reposGetHandler(db, w, r) }).Methods("GET")
-	r.HandleFunc("/api/repos", func(w http.ResponseWriter, r *http.Request) { reposPostHandler(db, w, r) }).Methods("POST")
+	// API
+	api := r.StrictSlash(true).PathPrefix("/api").Subrouter()
 
+	// Repos
+	repos := api.PathPrefix("/repos").Subrouter()
+	repos.Methods("GET").Path("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { reposGetHandler(db, w, r) })
+	repos.Methods("POST").Path("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { reposPostHandler(db, w, r) })
+	repos.Methods("GET").Path("/{link:.*}").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { repoGetHandler(db, w, r) })
+	repos.Methods("DELETE").Path("/{link:.*}").HandlerFunc(func(w http.ResponseWriter, r *http.Request) { repoDeleteHandler(db, w, r) })
+
+	// Web Server
 	r.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("web").HTTPBox()))
 
 	fmt.Println("Web server started at", aurora.Blue("http://localhost:62458/"))
-
 	log.Fatal(http.ListenAndServe(":62458", r))
 }
