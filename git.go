@@ -142,8 +142,12 @@ func onOldRepo(db *badger.DB, repo Repo) (Repo, error) {
 func onNewRepo(db *badger.DB, link string) (repo Repo, err error) {
 
 	// URL
-	repo.URL = strings.TrimSpace(repo.URL)
+	repo.URL = strings.TrimSpace(link)
 	fmt.Println(aurora.Bold("URL :"), aurora.Blue(repo.URL))
+	if repo.URL == "" {
+		rmRepo(db, repo)
+		return repo, ErrNoURL
+	}
 
 	// UUID
 	buuid, err := uuid.NewRandom()
