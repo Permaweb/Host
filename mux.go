@@ -117,11 +117,13 @@ func repoDeleteHandler(db *badger.DB, w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	link := vars["link"]
 
-	err := dbDelete(db, link)
+	repo, err := dbGet(db, link)
 	if err != nil {
-		errorf(w, http.StatusInternalServerError, "Couldn't delete the specified repository : %v", err)
+		errorf(w, http.StatusInternalServerError, "Couldn't find the specified repository : %v", err)
 		return
 	}
+
+	rmRepo(db, repo)
 
 	// Output `200`
 	w.WriteHeader(http.StatusOK)
