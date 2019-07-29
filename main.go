@@ -22,10 +22,9 @@ func main() {
 
 	// License
 	fmt.Println("")
-	fmt.Println(aurora.Bold("Gi :"), "Git to IPFS")
-	fmt.Println("Copyright © 2019 Nato Boram")
-	fmt.Println("This program is free software : you can redistribute it and/or modify it under the terms of the " + aurora.Underline("GNU General Public License").String() + " as published by the " + aurora.Underline("Free Software Foundation").String() + ", either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but " + aurora.Bold("without any warranty").String() + " ; without even the implied warranty of " + aurora.Italic("merchantability").String() + " or " + aurora.Italic("fitness for a particular purpose").String() + ". See the " + aurora.Underline("GNU General Public License").String() + " for more details. You should have received a copy of the " + aurora.Underline("GNU General Public License").String() + " along with this program. If not, see " + aurora.Blue("http://www.gnu.org/licenses/").String() + ".")
-	fmt.Println(aurora.Bold("Contact :"), aurora.Blue("https://gitlab.com/NatoBoram/git-to-ipfs"))
+	fmt.Println(aurora.Bold("Permaweb Host :"), "Upload a Git repo to IPNS.")
+	fmt.Println("Copyright © 2019 Nato Boram, Permaweb")
+	fmt.Println(aurora.Bold("Contact :"), aurora.Blue("https://github.com/Permaweb/Host"))
 	fmt.Println("")
 
 	// User
@@ -61,9 +60,6 @@ func main() {
 			time.Sleep(24 * time.Hour)
 		}
 	}()
-
-	// Test
-	// receiveURL(db, "git@gitlab.com:NatoBoram/git-to-ipfs.git")
 
 	// Router
 	go initMux(db)
