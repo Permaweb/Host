@@ -10,13 +10,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Changed
 
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.0.1] - 2019-06-36
+
+### Added
+
+* Added the following API endpoints :
+
+| Endpoint           | Method   | Description              |
+| ------------------ | -------- | ------------------------ |
+| `/api/repos`       | `GET`    | List of all repositories |
+| `/api/repos`       | `POST`   | Create a repository      |
+| `/api/repos/{url}` | `GET`    | Get this repository      |
+| `/api/repos/{url}` | `DELETE` | Delete this repository   |
+
+* Added a list of repositories
+* Added **Delete** buttons on that list of repositories
+
+### Changed
+
 * Changed ownership from [@NatoBoram](https://github.com/NatoBoram) to [@Permaweb](https://github.com/Permaweb)
 * Changed name from [Git to IPNS](https://gitlab.com/NatoBoram/git-to-ipfs) to [Permaweb Host](https://github.com/Permaweb/Host)
 * Changed license from [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/) to [MIT](https://choosealicense.com/licenses/mit/)
+* Spinners are now blue when they're actually doing something and black when they're not
 
 ### Deprecated
 
 ### Removed
+
+* Removed the following API endpoint :
+  * `/api/add`
 
 ### Fixed
 
