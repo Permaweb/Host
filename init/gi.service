@@ -1,0 +1,9 @@
+[Unit]
+Description=Permaweb Host
+
+[Service]
+ExecStart=~/go/bin/gi
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

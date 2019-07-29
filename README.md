@@ -14,10 +14,10 @@ Takes a Git repository and throws it on IPNS.
 Building the program requires `go`, `npm` and `ipfs`. Don't forget to add `~/go/bin` to your `$PATH`.
 
 This project uses [Hogan.js](https://twitter.github.io/hogan.js/) and [go.rice](https://github.com/GeertJohan/go.rice).
-Their installation is scripted in [tools/dependencies.sh](tools/dependencies.sh).
+Their installation is scripted in [scripts/dependencies.sh](scripts/dependencies.sh).
 
 ```bash
-./tools/dependencies.sh
+./scripts/dependencies.sh
 ```
 
 Please note that `npm` requires root to install packages globally.
@@ -26,20 +26,20 @@ Running the program requires `ipfs-cluster-ctl`. Make sure `ipfs-cluster-service
 
 ### Installation
 
-To install this project, run [tools/install.sh](tools/install.sh).
+To install this project, run [scripts/install.sh](scripts/install.sh).
 
 ```bash
-./tools/install.sh
+./scripts/install.sh
 ```
 
 It will publish the necessary files to IPFS, generate the templates and embed the web interface inside the binary.
 
 ### Running
 
-To run this project without installing it, run [tools/run.sh](tools/run.sh).
+To run this project without installing it, run [scripts/run.sh](scripts/run.sh).
 
 ```bash
-./tools/run.sh
+./scripts/run.sh
 ```
 
 It will publish the necessary files to IPFS, generate the templates and embed the web interface inside the binary.

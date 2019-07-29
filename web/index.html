@@ -18,6 +18,9 @@
 	<!-- Templates -->
 	<script src="templates/result_card.js"></script>
 	<script src="templates/spinner_grow.js"></script>
+	<script src="templates/repos_table.js"></script>
+	<script src="templates/alert_danger.js"></script>
+	<script src="templates/alert_success.js"></script>
 
 	<!-- App -->
 	<script src="js/home.js"></script>
@@ -45,13 +48,18 @@
 	<!-- Main -->
 	<main class="container">
 
+		<!-- Alerts when adding a new repo -->
+		<div id="card_result" class="m-3">
+			<!-- Hogan.JS -->
+		</div>
+
 		<!-- Form -->
 		<form class="m-3">
 
 			<!-- Git URL -->
 			<div class="form-group">
 				<label for="gitURLInput">Git URL</label>
-				<input type="text" class="form-control" id="gitURLInput" placeholder="git@gitlab.com:NatoBoram/git-to-ipfs.git" required>
+				<input type="text" class="form-control" id="gitURLInput" placeholder="git@github.com:Permaweb/Host.git" required>
 				<small class="form-text text-muted"></small>
 			</div>
 
@@ -59,8 +67,17 @@
 			<button type="button" class="btn btn-primary" onclick="gi.home.submit()">Submit</button>
 		</form>
 
-		<!-- Results -->
-		<div id="card_result" class="m-3"></div>
+		<!-- Alerts when dealing with the list of repos -->
+		<div id="list_alert" class="m-3">
+			<!-- Hogan.JS -->
+		</div>
+
+		<!-- List -->
+		<div id="repos_table" class="m-3">
+			<!-- Hogan.JS -->
+			<div class="spinner-grow m-auto"></div>
+		</div>
+
 	</main>
 
 </body>
