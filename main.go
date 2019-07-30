@@ -140,6 +140,11 @@ func initIPFS() (err error) {
 	}
 	fmt.Println(aurora.Bold("IPFS Cluster Control :"), aurora.Blue(path))
 
+	// Connect to Swarm
+	for _, pg := range PublicGateways {
+		ipfsSwarmConnect(pg)
+	}
+
 	fmt.Println("")
 	return
 }
