@@ -18,7 +18,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Security
 
-## [1.0.1] - 2019-06-36
+## [1.0.2] - 2019-07-31
+
+### Added
+
+* Adds a few selected peers to its swarm on startup for faster discovery.
+* Added a few unit tests.
+* Cross-compile script with lots of obscure operating systems and architectures.
+
+### Removed
+
+* Removed mention of the old license on startup.
+
+### Fixed
+
+* Fixed pipeline on CircleCI.
+
+## [1.0.1] - 2019-07-26
 
 ### Added
 
@@ -32,7 +48,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 | `/api/repos/{url}` | `DELETE` | Delete this repository   |
 
 * Added a list of repositories
-* Added **Delete** buttons on that list of repositories
+* Added **Delete** buttons on the list of repositories
 
 ### Changed
 
@@ -40,8 +56,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 * Changed name from [Git to IPNS](https://gitlab.com/NatoBoram/git-to-ipfs) to [Permaweb Host](https://github.com/Permaweb/Host)
 * Changed license from [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/) to [MIT](https://choosealicense.com/licenses/mit/)
 * Spinners are now blue when they're actually doing something and black when they're not
-
-### Deprecated
 
 ### Removed
 
@@ -51,8 +65,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 ### Fixed
 
 * Fixed some potential issues when refreshing old repositories that contain errors
-
-### Security
 
 ## [1.0.0] - 2019-07-25
 

@@ -110,3 +110,12 @@ func rm(uuid string) (out []byte, err error) {
 		aurora.Bold("Command :"), "rm", "--force", "--recursive", uuid,
 	)
 }
+
+func ipfsSwarmConnect(address string) (out []byte, err error) {
+	return run(
+		exec.Command("ipfs", "swarm", "connect", address),
+		".",
+		"Couldn't connect to "+address+".",
+		aurora.Bold("Command :"), "ipfs", "swarm", "connect", aurora.Cyan(address),
+	)
+}

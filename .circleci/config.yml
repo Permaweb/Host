@@ -22,7 +22,20 @@ jobs:
       - checkout
 
       # specify any bash command here prefixed with `run: `
-      - run: go get -t -u -v ./...
-      - run: go test -v ./...
-      - run: go build -a -race
+      #- run: go get -t -u -v ./...
+      - run: go get -t -u -v github.com/GeertJohan/go.rice
+      - run: go get -t -u -v github.com/dgraph-io/badger
+      - run: go get -t -u -v github.com/google/uuid
+      - run: go get -t -u -v github.com/gorilla/mux
+      - run: go get -t -u -v github.com/logrusorgru/aurora
+      - run: go get -t -u -v golang.org/x/xerrors
+
+      - run: go get -u -v github.com/GeertJohan/go.rice/rice
+      - run: rice embed-go
+
+      - run: go clean
+
+      - run: go test -v -cover -race ./...
+      - run: go build
+
       - run: go clean
