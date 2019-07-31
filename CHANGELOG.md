@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 * Adds a few selected peers to its swarm on startup for faster discovery.
 * Added a few unit tests.
+* Fixed pipeline on CircleCI.
 
 ### Changed
 
