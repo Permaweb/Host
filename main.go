@@ -148,21 +148,8 @@ func initIPFS() (err error) {
 }
 
 func initSwarm() {
-	pass := false
-
-	// As long as it fails, try again.
-	for !pass {
-		pass = true
-
-		for _, pg := range PublicGateways {
-			_, err := ipfsSwarmConnect(pg)
-			if err != nil {
-				pass = false
-			}
-		}
-
-		// Wait for a minute before re-trying.
-		time.Sleep(time.Minute)
+	for _, pg := range PublicGateways {
+		ipfsSwarmConnect(pg)
 	}
 }
 
