@@ -8,14 +8,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 
-* Adds a few selected peers to its swarm on startup for faster discovery.
-* Added a few unit tests.
-* Fixed pipeline on CircleCI.
-* Cross-compile script inclusive of a lot of obscure operating systems and architectures.
-
 ### Changed
 
 ### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.0.2] - 2019-07-31
+
+### Added
+
+* Adds a few selected peers to its swarm on startup for faster discovery.
+* Added a few unit tests.
+* Cross-compile script with lots of obscure operating systems and architectures.
 
 ### Removed
 
@@ -23,9 +32,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Fixed
 
-### Security
+* Fixed pipeline on CircleCI.
 
-## [1.0.1] - 2019-06-36
+## [1.0.1] - 2019-07-26
 
 ### Added
 
