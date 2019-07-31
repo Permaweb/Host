@@ -1,20 +1,20 @@
 image: golang:1.12.7
 
 before_script:
-  - go get -u -v github.com/Permaweb/Host
+  - go get -t -u -v github.com/Permaweb/Host
+  - go get -u -v github.com/GeertJohan/go.rice/rice
+  - rice embed-go
   - go clean
-
-build:
-  stage: build
-  script:
-    - go get -u -v github.com/GeertJohan/go.rice/rice
-    - rice embed-go
-    - go build
 
 test:
   stage: test
   script:
-    - go test -v -cover ./...
+    - go test -v -cover -race ./...
+
+build:
+  stage: build
+  script:
+    - go build
 
 after_script:
   - go clean

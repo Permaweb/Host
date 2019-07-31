@@ -30,6 +30,12 @@ jobs:
       - run: go get -t -u -v github.com/logrusorgru/aurora
       - run: go get -t -u -v golang.org/x/xerrors
 
-      - run: go test -v -cover ./...
-      - run: go build -a -race
+      - run: go get -u -v github.com/GeertJohan/go.rice/rice
+      - run: rice embed-go
+
+      - run: go clean
+
+      - run: go test -v -cover -race ./...
+      - run: go build
+
       - run: go clean
