@@ -37,7 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 | `/api/repos/{url}` | `DELETE` | Delete this repository   |
 
 * Added a list of repositories
-* Added **Delete** buttons on that list of repositories
+* Added **Delete** buttons on the list of repositories
 
 ### Changed
 
