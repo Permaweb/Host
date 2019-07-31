@@ -141,7 +141,7 @@ func initIPFS() (err error) {
 	fmt.Println(aurora.Bold("IPFS Cluster Control :"), aurora.Blue(path))
 
 	// Connect to Swarm
-	go initSwarm()
+	initSwarm()
 
 	fmt.Println("")
 	return
