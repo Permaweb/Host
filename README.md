@@ -43,3 +43,13 @@ To run this project without installing it, run [scripts/run.sh](scripts/run.sh).
 ```
 
 It will publish the necessary files to IPFS, generate the templates and embed the web interface inside the binary.
+
+### Building
+
+To build this project, run [scripts/cross-compile.sh](scripts/cross-compile.sh).
+
+```bash
+./scripts/cross-compile.sh
+```
+
+It will publish the necessary files to IPFS, generate the templates, embed the web interface inside the binary, then compile the program for every single operating system and architecture supported by Go. Lots of them will fail, but the result is ready to be published.

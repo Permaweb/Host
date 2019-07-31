@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 * Adds a few selected peers to its swarm on startup for faster discovery.
 * Added a few unit tests.
 * Fixed pipeline on CircleCI.
+* Cross-compile script inclusive of a lot of obscure operating systems and architectures.
 
 ### Changed
 
