@@ -8,11 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 
+* Adds a few selected peers to its swarm on startup for faster discovery.
+* Added a few unit tests.
+
 ### Changed
 
 ### Deprecated
 
 ### Removed
+
+* Removed mention of the old license on startup.
 
 ### Fixed
 
