@@ -141,12 +141,29 @@ func initIPFS() (err error) {
 	fmt.Println(aurora.Bold("IPFS Cluster Control :"), aurora.Blue(path))
 
 	// Connect to Swarm
-	for _, pg := range PublicGateways {
-		ipfsSwarmConnect(pg)
-	}
+	go initSwarm()
 
 	fmt.Println("")
 	return
+}
+
+func initSwarm() {
+	pass := false
+
+	// As long as it fails, try again.
+	for !pass {
+		pass = true
+
+		for _, pg := range PublicGateways {
+			_, err := ipfsSwarmConnect(pg)
+			if err != nil {
+				pass = false
+			}
+		}
+
+		// Wait for a minute before re-trying.
+		time.Sleep(time.Minute)
+	}
 }
 
 func initBager() (db *badger.DB, err error) {
