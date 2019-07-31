@@ -4,6 +4,13 @@ import (
 	"testing"
 )
 
+func TestDirSize(t *testing.T) {
+	_, err := dirSize(".")
+	if err != nil {
+		t.Errorf("dirSize failed: %s.", err.Error())
+	}
+}
+
 // Replication minimum for a cluster consisting of a single peer.
 // If the cluster consisted of many, many peers, then the minimum should be 3 to allow re-pinning.
 func TestRMin(t *testing.T) {
@@ -11,9 +18,12 @@ func TestRMin(t *testing.T) {
 		input  int64
 		output string
 	}{
-		{0, "1"},                      //   0 MiB
-		{512 * 1024 * 1024, "1"},      // 512 MiB
-		{1 * 1024 * 1024 * 1024, "1"}, //   1 GiB
+		{0, "1"},                      // Test value     |   0 MiB | 1
+		{512 * 1024 * 1024, "1"},      // Test value     | 512 MiB | 1
+		{1 * 1024 * 1024 * 1024, "1"}, // Test value     |   1 GiB | 1
+		{321756774, "1"},              // Smallest build | 307 MiB | 1
+		{499107798, "1"},              // Average build  | 476 MiB | 1
+		{755192969, "1"},              // Largest build  | 720 MiB | 1
 	}
 
 	for _, test := range tests {
