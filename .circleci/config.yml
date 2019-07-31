@@ -30,6 +30,6 @@ jobs:
       - run: go get -t -u -v github.com/logrusorgru/aurora
       - run: go get -t -u -v golang.org/x/xerrors
 
-      - run: go test -v ./...
+      - run: go test -v -cover ./...
       - run: go build -a -race
       - run: go clean
