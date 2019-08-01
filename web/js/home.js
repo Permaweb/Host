@@ -1,5 +1,5 @@
-if (!!!gi) var gi = {};
-gi.home = {
+if (!!!gipns) var gipns = {};
+gipns.home = {
 
 	submit: function () {
 		const link = document.querySelector("#gitURLInput").value;
@@ -16,13 +16,13 @@ gi.home = {
 
 			// Status
 			if (response.status !== 200) {
-				return gi.home.error(response, "#card_result");
+				return gipns.home.error(response, "#card_result");
 			}
 
 			// Apply
 			response.json().then(response => {
 				document.querySelector("#card_result").innerHTML = templates.result_card.render(response);
-				gi.home.list();
+				gipns.home.list();
 			});
 		}).catch(error => console.error(error));
 	},
@@ -36,7 +36,7 @@ gi.home = {
 
 			// Status
 			if (response.status !== 200) {
-				return gi.home.error(response, "#list_alert");
+				return gipns.home.error(response, "#list_alert");
 			}
 
 			// Apply
@@ -56,12 +56,12 @@ gi.home = {
 
 			// Status
 			if (response.status !== 200) {
-				return gi.home.error(response, "#list_alert");
+				return gipns.home.error(response, "#list_alert");
 			}
 
 			// Apply
 			document.querySelector("#list_alert").innerHTML = templates.alert_success.render({ message: "Successfully deleted the repo." });
-			gi.home.list();
+			gipns.home.list();
 		}).catch(error => console.error(error));
 	},
 
@@ -80,4 +80,4 @@ gi.home = {
 };
 
 // Startup
-gi.home.list();
+gipns.home.list();
