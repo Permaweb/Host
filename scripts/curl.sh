@@ -10,4 +10,4 @@ curl -X GET http://localhost:62458/api/repos/
 curl -X GET http://localhost:62458/api/repos/git@github.com:Permaweb/Host.git
 
 # Delete a single repo
-curl -X GET http://localhost:62458/api/repos/git@github.com:Permaweb/Host.git
+curl -X DELETE http://localhost:62458/api/repos/git@github.com:Permaweb/Host.git
