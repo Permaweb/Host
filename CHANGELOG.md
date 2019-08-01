@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.0.3] - 2019-08-01
+
+### Added
+
 * Added a forward-compatibility module in case of breaking changes for seamless upgrades.
 
 ### Changed
@@ -18,15 +32,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 mv ~/.config/gi ~/.config/gipns
 ```
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 
 * Fixed `curl` test `DELETE` script.
-
-### Security
 
 ## [1.0.2] - 2019-07-31
 
