@@ -10,7 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Changed
 
-* Change config directory to `~/.config/gipns`.
+* Changed config directory to `~/.config/gipns`.
+
+```bash
+mv ~/.config/gi ~/.config/gipns
+```
 
 ### Deprecated
 
