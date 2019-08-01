@@ -1,5 +1,7 @@
 #!/bin/sh
 
+go clean
+rm -r build
 ./scripts/build.sh
 
 env GOOS=aix        GOARCH=ppc64    go build -o build/permaweb-host-aix-ppc64

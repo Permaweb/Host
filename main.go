@@ -34,6 +34,12 @@ func main() {
 	}
 	dirHome = path
 
+	// Forward Compatibility
+	err = initCompatibility()
+	if err != nil {
+		return
+	}
+
 	// IPFS
 	err = initIPFS()
 	if err != nil {
@@ -205,4 +211,23 @@ func initMux(db *badger.DB) {
 
 	fmt.Println("Web server started at", aurora.Blue("http://localhost:62458/"))
 	log.Fatal(http.ListenAndServe(":62458", r))
+}
+
+func initCompatibility() (err error) {
+
+	// Move config directory
+	dirOldConfig := dirHome + "/.config/gi"
+	if _, err := os.Stat(dirOldConfig); !os.IsNotExist(err) {
+		_, err = mv(dirOldConfig, dirHome+dirConfig)
+		if err != nil {
+			fmt.Println("Couldn't move old config to new directory")
+			fmt.Println(err.Error())
+			return err
+		}
+	}
+
+	// Convert Badger to new version, when applicable.
+	// ...
+
+	return
 }

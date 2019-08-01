@@ -7,7 +7,7 @@ import "os"
 // Relative paths for the whole application.
 // Use them with `dirHome`.
 const (
-	dirConfig = "/.config/gi"
+	dirConfig = "/.config/gipns"
 	dirBadger = dirConfig + "/badger"
 	dirGit    = dirConfig + "/git"
 )

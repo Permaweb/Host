@@ -18,6 +18,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Security
 
+## [1.0.3] - 2019-08-01
+
+### Added
+
+* Added a forward-compatibility module in case of breaking changes for seamless upgrades.
+
+### Changed
+
+* Changed config directory to `~/.config/gipns`.
+
+```bash
+mv ~/.config/gi ~/.config/gipns
+```
+
+### Fixed
+
+* Fixed `curl` test `DELETE` script.
+
 ## [1.0.2] - 2019-07-31
 
 ### Added

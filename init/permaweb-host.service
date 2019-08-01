@@ -2,7 +2,7 @@
 Description=Permaweb Host
 
 [Service]
-ExecStart=~/go/bin/gi
+ExecStart=~/go/bin/permaweb-host
 Restart=on-failure
 
 [Install]

@@ -119,3 +119,12 @@ func ipfsSwarmConnect(address string) (out []byte, err error) {
 		aurora.Bold("Command :"), "ipfs", "swarm", "connect", aurora.Cyan(address),
 	)
 }
+
+func mv(first, second string) (out []byte, err error) {
+	return run(
+		exec.Command("mv", first, second),
+		".",
+		"Couldn't move "+first+" to "+second+".",
+		aurora.Bold("Command :"), "mv", first, second,
+	)
+}
