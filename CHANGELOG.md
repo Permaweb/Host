@@ -10,11 +10,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Changed
 
+* Change config directory to `~/.config/gipns`.
+
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+* Fixed `curl` test `DELETE` script.
 
 ### Security
 
