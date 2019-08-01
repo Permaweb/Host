@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/) and this 
 
 ### Added
 
+* Added a forward-compatibility module in case of breaking changes for seamless upgrades.
+
 ### Changed
 
 * Changed config directory to `~/.config/gipns`.
