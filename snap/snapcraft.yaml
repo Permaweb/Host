@@ -17,7 +17,7 @@ parts:
       - gcc
       - git
     build-snaps:
-#      - ipfs/edge
+      - ipfs/latest/edge
       - node/12/stable
     override-build: |
       sudo npm install --global hogan.js
@@ -26,19 +26,16 @@ parts:
       go get -u github.com/GeertJohan/go.rice/rice
       ~/go/bin/rice embed-go
 
-      # sudo snap install ipfs --edge
-      # ipfs init
-      # ./scripts/ipfs.sh
+      ./scripts/ipfs.sh
 
       snapcraftctl build
     source: .
-    source-type: git
 #    stage-snaps:
 #      - ipfs/edge
 #      - ipfs-cluster/edge
     plugin: go
-    go-channel: stable
-#    go-importpath: github.com/Permaweb/Host/
+    go-channel: latest/stable
+    go-importpath: github.com/Permaweb/Host
 apps:
   permaweb-host:
-    command: bin/project
+    command: bin/Host
