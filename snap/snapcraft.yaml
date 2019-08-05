@@ -30,9 +30,9 @@ parts:
 
       snapcraftctl build
     source: .
-#    stage-snaps:
-#      - ipfs/edge
-#      - ipfs-cluster/edge
+    stage-snaps:
+      - ipfs/latest/edge
+      - ipfs-cluster/latest/edge
     plugin: go
     go-channel: latest/stable
     go-importpath: github.com/Permaweb/Host
