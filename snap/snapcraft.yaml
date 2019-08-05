@@ -1,36 +1,36 @@
 name: permaweb-host
+title: Permaweb Host
+base: core18
 version: git
 summary: Throws a Git repo to IPNS
 description: |
   Permaweb Host exposes a web interface and an API to add Git repos to IPNS.
   This interface is not protected. Ideally, if you want to sell its services,
   you should create your own web interface with user authentication and a payment gateway.
-base: core18
-confinement: strict
-architectures:
-  - "386"
-  - amd64
-  - arm
-  - arm64
-  - mips
-  - mips64
-  - mips64le
-  - mipsle
-  - ppc64
-  - ppc64le
-  - s390x
+type: app
+confinement: devmode
+license: MIT
+grade: devel
 parts:
-  pwemaweb-host:
+  permaweb-host:
     build-packages:
+      - gcc
       - git
     build-snaps:
-      - go/stable
+#      - ipfs/edge
       - node/12/stable
     override-build: |
-      npm install --global hogan.js
+      sudo npm install --global hogan.js
       npx hulk ./web/mustache/*.html --outputdir ./web/templates/
+
       go get -u github.com/GeertJohan/go.rice/rice
       ~/go/bin/rice embed-go
+
+      # sudo snap install ipfs --edge
+      # ipfs init
+      # ./scripts/ipfs.sh
+
+      snapcraftctl build
     source: .
     source-type: git
 #    stage-snaps:
@@ -38,3 +38,7 @@ parts:
 #      - ipfs-cluster/edge
     plugin: go
     go-channel: stable
+#    go-importpath: github.com/Permaweb/Host/
+apps:
+  permaweb-host:
+    command: bin/project
