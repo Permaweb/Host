@@ -12,3 +12,4 @@ snapcraft clean --destructive-mode permaweb-host; env GOOS=linux GOARCH=mipsle  
 snapcraft clean --destructive-mode permaweb-host; env GOOS=linux GOARCH=ppc64    snapcraft snap --target-arch=ppc64    --destructive-mode --output build/permaweb-host_ppc64.snap
 snapcraft clean --destructive-mode permaweb-host; env GOOS=linux GOARCH=ppc64le  snapcraft snap --target-arch=ppc64le  --destructive-mode --output build/permaweb-host_ppc64le.snap
 snapcraft clean --destructive-mode permaweb-host; env GOOS=linux GOARCH=s390x    snapcraft snap --target-arch=s390x    --destructive-mode --output build/permaweb-host_s390x.snap
+snapcraft clean --destructive-mode
