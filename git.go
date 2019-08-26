@@ -100,7 +100,7 @@ func onOldRepo(db *badger.DB, repo Repo) (Repo, error) {
 	ipfsClusterRm(repo.IPFS)
 
 	// Size
-	size, err := dirSize(dirHome + dirGit + "/" + repo.UUID)
+	size, err := dirSize(rootCache + dirGit + "/" + repo.UUID)
 	if err != nil {
 		fmt.Println("Couldn't get the size of the git repository.")
 		fmt.Println(err.Error())
@@ -169,7 +169,7 @@ func onNewRepo(db *badger.DB, link string) (repo Repo, err error) {
 	}
 
 	// Size
-	size, err := dirSize(dirHome + dirGit + "/" + repo.UUID)
+	size, err := dirSize(rootCache + dirGit + "/" + repo.UUID)
 	if err != nil {
 		fmt.Println("Couldn't get the size of the git repository.")
 		fmt.Println(err.Error())

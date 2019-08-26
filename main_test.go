@@ -3,11 +3,10 @@ package main
 import "testing"
 
 func TestInitUser(t *testing.T) {
-	path, err := initUser()
+	err := initUser()
 	if err != nil {
 		t.Errorf("Init User failed: %s.", err.Error())
 	}
-	dirHome = path
 }
 
 func TestInitGit(t *testing.T) {
@@ -22,7 +21,7 @@ func TestInitGit(t *testing.T) {
 func TestInitBadger(t *testing.T) {
 	TestInitUser(t)
 
-	db, err := initBager()
+	db, err := initBadger()
 	if err != nil {
 		t.Errorf("Init Badger failed: %s.", err.Error())
 	}
