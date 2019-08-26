@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 	"strings"
 	"sync"
@@ -89,6 +90,14 @@ func onOldRepo(db *badger.DB, repo Repo) (Repo, error) {
 	fmt.Println(aurora.Bold("Key :"), repo.Key)
 	fmt.Println(aurora.Bold("IPNS :"), aurora.Cyan(repo.IPNS))
 	fmt.Println()
+
+	// Clone
+	if _, err := os.Stat(rootCache + dirGit + "/" + repo.UUID); os.IsNotExist(err) {
+		_, err = gitClone(repo.URL, repo.UUID)
+		if err != nil {
+			return repo, err
+		}
+	}
 
 	// Pull
 	_, err := gitPull(repo.UUID)
