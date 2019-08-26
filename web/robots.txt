@@ -1,5 +1,8 @@
 User-agent: *
+
 Disallow: /js/
 Disallow: /mustache/
 Disallow: /templates/
 Disallow: /.jshintrc
+
+Disallow: /api/

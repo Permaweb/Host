@@ -6,7 +6,8 @@ import "errors"
 
 // Path
 var (
-	dirHome string
+	rootConfig string
+	rootCache  string
 )
 
 // Errors

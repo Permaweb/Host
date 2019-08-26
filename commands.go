@@ -37,7 +37,7 @@ func run(cmd *exec.Cmd, path string, errMessage string, cmdMessage ...interface{
 func ipfsClusterAdd(link string, rmin string, rmax string, uuid string) (out []byte, err error) {
 	return run(
 		exec.Command("ipfs-cluster-ctl", "add", "--recursive", "--quieter", "--chunker=rabin", "--cid-version=1", "--name", link, "--replication-min", rmin, "--replication-max", rmax, uuid),
-		dirHome+dirGit,
+		rootCache+dirGit,
 		"Couldn't add the repository to IPFS.",
 		aurora.Bold("Command :"), "ipfs-cluster-ctl", "add", "--recursive", "--quieter", "--chunker=rabin", "--cid-version=1", "--name", aurora.Blue(link), "--replication-min", aurora.Bold(rmin), "--replication-max", aurora.Bold(rmax), uuid,
 	)
@@ -78,7 +78,7 @@ func ipfsNamePublish(key string, ipfs string) (out []byte, err error) {
 func gitClone(link string, uuid string) (out []byte, err error) {
 	return run(
 		exec.Command("git", "clone", link, uuid),
-		dirHome+dirGit,
+		rootCache+dirGit,
 		"Couldn't clone the repository.",
 		aurora.Bold("Command :"), "git", "clone", aurora.Blue(link), uuid,
 	)
@@ -87,7 +87,7 @@ func gitClone(link string, uuid string) (out []byte, err error) {
 func gitPull(uuid string) (out []byte, err error) {
 	return run(
 		exec.Command("git", "-C", uuid, "pull"),
-		dirHome+dirGit,
+		rootCache+dirGit,
 		"Couldn't pull the repository.",
 		aurora.Bold("Command :"), "git", "-C", uuid, "pull",
 	)
@@ -105,7 +105,7 @@ func ipfsClusterRm(ipfs string) (out []byte, err error) {
 func rm(uuid string) (out []byte, err error) {
 	return run(
 		exec.Command("rm", "--force", "--recursive", uuid),
-		dirHome+dirGit,
+		rootCache+dirGit,
 		"Couldn't delete the repository.",
 		aurora.Bold("Command :"), "rm", "--force", "--recursive", uuid,
 	)

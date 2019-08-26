@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 	"strings"
 	"sync"
@@ -90,6 +91,14 @@ func onOldRepo(db *badger.DB, repo Repo) (Repo, error) {
 	fmt.Println(aurora.Bold("IPNS :"), aurora.Cyan(repo.IPNS))
 	fmt.Println()
 
+	// Clone
+	if _, err := os.Stat(rootCache + dirGit + "/" + repo.UUID); os.IsNotExist(err) {
+		_, err = gitClone(repo.URL, repo.UUID)
+		if err != nil {
+			return repo, err
+		}
+	}
+
 	// Pull
 	_, err := gitPull(repo.UUID)
 	if err != nil {
@@ -100,7 +109,7 @@ func onOldRepo(db *badger.DB, repo Repo) (Repo, error) {
 	ipfsClusterRm(repo.IPFS)
 
 	// Size
-	size, err := dirSize(dirHome + dirGit + "/" + repo.UUID)
+	size, err := dirSize(rootCache + dirGit + "/" + repo.UUID)
 	if err != nil {
 		fmt.Println("Couldn't get the size of the git repository.")
 		fmt.Println(err.Error())
@@ -169,7 +178,7 @@ func onNewRepo(db *badger.DB, link string) (repo Repo, err error) {
 	}
 
 	// Size
-	size, err := dirSize(dirHome + dirGit + "/" + repo.UUID)
+	size, err := dirSize(rootCache + dirGit + "/" + repo.UUID)
 	if err != nil {
 		fmt.Println("Couldn't get the size of the git repository.")
 		fmt.Println(err.Error())

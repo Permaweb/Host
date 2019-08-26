@@ -5,11 +5,11 @@ package main
 import "os"
 
 // Relative paths for the whole application.
-// Use them with `dirHome`.
+// Use them with `rootConfig` and `rootCache`.
 const (
-	dirConfig = "/.config/gipns"
-	dirBadger = dirConfig + "/badger"
-	dirGit    = dirConfig + "/git"
+	dirApp    = "/gipns"
+	dirBadger = dirApp + "/badger"
+	dirGit    = dirApp + "/git"
 )
 
 // Permissions

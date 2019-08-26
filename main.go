@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
-	"os/user"
 	"time"
 
 	rice "github.com/GeertJohan/go.rice"
@@ -28,11 +27,10 @@ func main() {
 	fmt.Println("")
 
 	// User
-	path, err := initUser()
+	err := initUser()
 	if err != nil {
 		return
 	}
-	dirHome = path
 
 	// Forward Compatibility
 	err = initCompatibility()
@@ -53,7 +51,7 @@ func main() {
 	}
 
 	// Badger
-	db, err := initBager()
+	db, err := initBadger()
 	if err != nil {
 		return
 	}
@@ -94,7 +92,7 @@ func main() {
 func initGit() (err error) {
 
 	// Git Directory
-	err = os.MkdirAll(dirHome+dirGit, permPrivateDirectory)
+	err = os.MkdirAll(rootCache+dirGit, permPrivateDirectory)
 	if err != nil {
 		fmt.Println("Couldn't create the git directory.")
 		fmt.Println(err.Error())
@@ -159,10 +157,10 @@ func initSwarm() {
 	}
 }
 
-func initBager() (db *badger.DB, err error) {
+func initBadger() (db *badger.DB, err error) {
 
 	// Badger Directory
-	err = os.MkdirAll(dirHome+dirBadger, permPrivateDirectory)
+	err = os.MkdirAll(rootConfig+dirBadger, permPrivateDirectory)
 	if err != nil {
 		fmt.Println("Couldn't create the badger directory.")
 		fmt.Println(err.Error())
@@ -170,7 +168,7 @@ func initBager() (db *badger.DB, err error) {
 	}
 
 	// Options
-	options := badger.DefaultOptions(dirHome + dirBadger)
+	options := badger.DefaultOptions(rootConfig + dirBadger)
 
 	db, err = badger.Open(options)
 	if err != nil {
@@ -182,15 +180,21 @@ func initBager() (db *badger.DB, err error) {
 	return db, err
 }
 
-func initUser() (path string, err error) {
+func initUser() (err error) {
 
-	usr, err := user.Current()
+	rootConfig, err = os.UserConfigDir()
 	if err != nil {
-		fmt.Println("Couldn't get the current user.")
+		fmt.Println("Couldn't get the default root directory to use for user-specific configuration data.")
 		fmt.Println(err.Error())
 	}
 
-	return usr.HomeDir, err
+	rootCache, err = os.UserCacheDir()
+	if err != nil {
+		fmt.Println("Couldn't get the default root directory to use for user-specific cached data.")
+		fmt.Println(err.Error())
+	}
+
+	return err
 }
 
 func initMux(db *badger.DB) {
@@ -216,9 +220,9 @@ func initMux(db *badger.DB) {
 func initCompatibility() (err error) {
 
 	// Move config directory
-	dirOldConfig := dirHome + "/.config/gi"
+	dirOldConfig := rootConfig + "/gi"
 	if _, err := os.Stat(dirOldConfig); !os.IsNotExist(err) {
-		_, err = mv(dirOldConfig, dirHome+dirConfig)
+		_, err = mv(dirOldConfig, rootConfig+dirBadger)
 		if err != nil {
 			fmt.Println("Couldn't move old config to new directory")
 			fmt.Println(err.Error())
