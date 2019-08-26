@@ -1,4 +1,4 @@
-# Init
+# `/init`
 
 This folder contains an example of init service that can be used with `systemd`.
 

@@ -21,3 +21,10 @@ type repoerr struct {
 	repo Repo
 	err  error
 }
+
+// User is an end-user.
+type User struct {
+	UUID     string
+	Username string
+	password string
+}
