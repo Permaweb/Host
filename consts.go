@@ -1,6 +1,4 @@
-// Constants.
-
-package main
+package host
 
 import "os"
 

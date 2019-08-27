@@ -1,10 +1,12 @@
 // Encoding and decoding on gob objects.
 
-package main
+package badger
 
 import (
 	"bytes"
 	"encoding/gob"
+
+	"github.com/Permaweb/host"
 )
 
 // String
@@ -24,14 +26,14 @@ func decodeString(b []byte) (s string, err error) {
 
 // Repo
 
-func (repo Repo) encode() (b []byte, err error) {
+func encodeRepo(repo host.Repo) (b []byte, err error) {
 	buffer := &bytes.Buffer{}
 	err = gob.NewEncoder(buffer).Encode(repo)
 	b = buffer.Bytes()
 	return
 }
 
-func decodeRepo(b []byte) (repo Repo, err error) {
+func decodeRepo(b []byte) (repo host.Repo, err error) {
 	buffer := bytes.NewBuffer(b)
 	err = gob.NewDecoder(buffer).Decode(&repo)
 	return

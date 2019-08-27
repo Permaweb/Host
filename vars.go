@@ -1,6 +1,4 @@
-// Global state of the application.
-
-package main
+package host
 
 import "errors"
 
