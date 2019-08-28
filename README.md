@@ -53,3 +53,9 @@ To build this project, run [scripts/cross-compile.sh](scripts/cross-compile.sh).
 ```
 
 It will publish the necessary files to IPFS, generate the templates, embed the web interface inside the binary, then compile the program for every single operating system and architecture supported by Go. Lots of them will fail, but the result is ready to be published.
+
+## Useful articles
+
+* https://medium.com/@benbjohnson/standard-package-layout-7cdbc8391fc1
+* https://medium.com/@wishmithasmendis/from-rdbms-to-key-value-store-data-modeling-techniques-a2874906bc46
+* https://barkeywolf.consulting/posts/badger-event-store/
