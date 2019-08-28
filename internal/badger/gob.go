@@ -38,3 +38,33 @@ func decodeRepo(b []byte) (repo host.Repo, err error) {
 	err = gob.NewDecoder(buffer).Decode(&repo)
 	return
 }
+
+// Session
+
+func encodeSession(session host.Session) (b []byte, err error) {
+	buffer := &bytes.Buffer{}
+	err = gob.NewEncoder(buffer).Encode(session)
+	b = buffer.Bytes()
+	return
+}
+
+func decodeSession(b []byte) (session host.Session, err error) {
+	buffer := bytes.NewBuffer(b)
+	err = gob.NewDecoder(buffer).Decode(&session)
+	return
+}
+
+// User
+
+func encodeUser(user host.User) (b []byte, err error) {
+	buffer := &bytes.Buffer{}
+	err = gob.NewEncoder(buffer).Encode(user)
+	b = buffer.Bytes()
+	return
+}
+
+func decodeUser(b []byte) (user host.User, err error) {
+	buffer := bytes.NewBuffer(b)
+	err = gob.NewDecoder(buffer).Decode(&user)
+	return
+}
