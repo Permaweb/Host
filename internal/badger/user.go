@@ -98,7 +98,7 @@ func (s *UserService) Create(user *host.User) (err error) {
 // Delete a user.
 func (s *UserService) Delete(user *host.User) (err error) {
 	return s.DB.Update(func(txn *badger.Txn) (err error) {
-		return txn.Delete([]byte(userPrefix + user.UUID))
+		return txn.Delete([]byte(userPrefix + user.UUID.String()))
 	})
 }
 
@@ -111,6 +111,6 @@ func (s *UserService) Edit(user *host.User) (err error) {
 	}
 
 	return s.DB.Update(func(txn *badger.Txn) error {
-		return txn.Set([]byte(userPrefix+user.ULID.String()), b)
+		return txn.Set([]byte(userPrefix+user.UUID.String()), b)
 	})
 }

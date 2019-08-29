@@ -56,6 +56,6 @@ It will publish the necessary files to IPFS, generate the templates, embed the w
 
 ## Useful articles
 
-* https://medium.com/@benbjohnson/standard-package-layout-7cdbc8391fc1
-* https://medium.com/@wishmithasmendis/from-rdbms-to-key-value-store-data-modeling-techniques-a2874906bc46
-* https://barkeywolf.consulting/posts/badger-event-store/
+* [Standard Package Layout](https://medium.com/@benbjohnson/standard-package-layout-7cdbc8391fc1)
+* [From RDBMS to Key-Value Store: Data Modeling Techniques](https://medium.com/@wishmithasmendis/from-rdbms-to-key-value-store-data-modeling-techniques-a2874906bc46)
+* [Building a minimalistic time-sorted Event Store using a key-value database in Go](https://barkeywolf.consulting/posts/badger-event-store/)

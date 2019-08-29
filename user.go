@@ -2,12 +2,12 @@ package host
 
 import (
 	"github.com/Permaweb/host/internal/github"
-	"github.com/oklog/ulid"
+	"github.com/google/uuid"
 )
 
 // User is a collection of oAuth tokens.
 type User struct {
-	ulid.ULID
+	uuid.UUID
 	GitHub *GitHubUser
 }
 
@@ -19,7 +19,7 @@ type GitHubUser struct {
 
 // UserService is a service that manages users.
 type UserService interface {
-	User(uuid string) (user *User, err error)
+	User(uuid uuid.UUID) (user *User, err error)
 	Users() (users []*User, err error)
 	Create(user *User) (err error)
 	Delete(user *User) (err error)

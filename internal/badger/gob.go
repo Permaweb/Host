@@ -7,6 +7,7 @@ import (
 	"encoding/gob"
 
 	"github.com/Permaweb/host"
+	"github.com/google/uuid"
 )
 
 // String
@@ -66,5 +67,20 @@ func encodeUser(user host.User) (b []byte, err error) {
 func decodeUser(b []byte) (user host.User, err error) {
 	buffer := bytes.NewBuffer(b)
 	err = gob.NewDecoder(buffer).Decode(&user)
+	return
+}
+
+// UUID
+
+func encodeUUID(uuid uuid.UUID) (b []byte, err error) {
+	buffer := &bytes.Buffer{}
+	err = gob.NewEncoder(buffer).Encode(uuid)
+	b = buffer.Bytes()
+	return
+}
+
+func decodeUUID(b []byte) (uuid uuid.UUID, err error) {
+	buffer := bytes.NewBuffer(b)
+	err = gob.NewDecoder(buffer).Decode(&uuid)
 	return
 }

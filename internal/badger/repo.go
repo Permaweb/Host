@@ -9,8 +9,8 @@ import (
 /*
 	Table
 
-	repo:ulid           | Repo
-	user:ulid:repo:ulid | Repo
+	repo:uuid           | Repo
+	user:uuid:repo:uuid | Repo
 */
 
 // RepoService is a BadgerDS implementation of host.RepoService.
@@ -25,9 +25,9 @@ const (
 )
 
 // Repo gets a single repo.
-func (s *RepoService) Repo(ulid string) (repo *host.Repo, err error) {
+func (s *RepoService) Repo(uuid uuid.UUID) (repo *host.Repo, err error) {
 	err = s.DB.View(func(txn *badger.Txn) error {
-		item, err := txn.Get([]byte(repoPrefix + ulid))
+		item, err := txn.Get([]byte(repoPrefix + uuid.String()))
 		if err != nil {
 			return err
 		}
@@ -45,14 +45,14 @@ func (s *RepoService) Repos(user *host.User) (repos []*host.Repo, err error) {
 	s.DB.View(func(txn *badger.Txn) (err error) {
 		it := txn.NewIterator(badger.DefaultIteratorOptions)
 		defer it.Close()
-		prefix := []byte(userPrefix + user.ULID.String() + repoSuffix)
+		prefix := []byte(userPrefix + user.UUID.String() + repoSuffix)
 		for it.Seek(prefix); it.ValidForPrefix(prefix); it.Next() {
 			item := it.Item()
 			// k := string(item.Key())
 			err := item.Value(func(v []byte) (err error) {
 
 				// UUID
-				uuid, err := decodeString(v)
+				uuid, err := decodeUUID(v)
 				if err != nil {
 					return err
 				}
@@ -78,7 +78,7 @@ func (s *RepoService) Repos(user *host.User) (repos []*host.Repo, err error) {
 
 // Owner gets a repo's owner.
 func (s *RepoService) Owner(repo *host.Repo) (user *host.User, err error) {
-	return s.UserService.User(repo.ULID.String())
+	return s.UserService.User(repo.UUID.String())
 }
 
 // Create a repo.
