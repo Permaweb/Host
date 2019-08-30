@@ -5,30 +5,37 @@ import "os"
 // Relative paths for the whole application.
 // Use them with `rootConfig` and `rootCache`.
 const (
-	dirApp    = "/gipns"
-	dirBadger = dirApp + "/badger"
-	dirGit    = dirApp + "/git"
+	DirApp    = "/gipns"
+	DirBadger = DirApp + "/badger"
+	DirGit    = DirApp + "/git"
 )
 
 // Permissions
 const (
-	permPrivateDirectory os.FileMode = 0700
-	permPrivateFile      os.FileMode = 0600
+	PermPrivateDirectory os.FileMode = 0700
+	PermPrivateFile      os.FileMode = 0600
 )
 
 // Calculations
 const (
-	speed   = 10 * 1024 * 1024
-	seconds = 60
+	DownloadSpeed   = 10 * 1024 * 1024
+	DownloadSeconds = 60
 )
+
+// PublicGateway is a public IPFS Gateway that supports `_dnslink`.
+type PublicGateway string
 
 // Public Gateways
 const (
-	pgPermaweb = "/dnsaddr/permaweb.io"
-	pgLibp2p   = "/dnsaddr/bootstrap.libp2p.io"
+	PublicGatewayPermaweb PublicGateway = "/dnsaddr/permaweb.io"
+	PublicGatewayLibp2p   PublicGateway = "/dnsaddr/bootstrap.libp2p.io"
 )
 
-// List of supported Git hosts
+// GitHost is a Git host.
+type GitHost string
+
+// Services are third-party Git hosts with oAuth2.
 const (
-	serviceGitHub = "GitHub"
+	GitHostGitHub GitHost = "GitHub"
+	GitHostGitLab GitHost = "GitLab"
 )

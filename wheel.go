@@ -24,5 +24,5 @@ func rmin(size int64) string {
 }
 
 func rmax(size int64) string {
-	return strconv.FormatInt(size/(speed*seconds)+1, 10)
+	return strconv.FormatInt(size/(DownloadSpeed*DownloadSeconds)+1, 10)
 }

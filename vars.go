@@ -2,10 +2,10 @@ package host
 
 import "errors"
 
-// Path
+// Paths
 var (
-	rootConfig string
-	rootCache  string
+	RootConfig string
+	RootCache  string
 )
 
 // Errors
@@ -14,7 +14,7 @@ var (
 )
 
 // PublicGateways is a list of public IPFS gateways that can be used with `ipfs swarm connect`.
-var PublicGateways = []string{
-	pgPermaweb,
-	pgLibp2p,
+var PublicGateways = []PublicGateway{
+	PublicGatewayPermaweb,
+	PublicGatewayLibp2p,
 }
