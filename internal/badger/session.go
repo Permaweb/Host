@@ -20,14 +20,14 @@ const (
 )
 
 // User gets a user using the Session Service
-func (s *SessionService) User(key string) (user *host.User, err error) {
-	err = s.DB.View(func(txn *badger.Txn) error {
-		item, err := txn.Get([]byte(sessionPrefix + key))
+func (s *SessionService) User(key uuid.UUID) (user *host.User, err error) {
+	err = s.DB.View(func(txn *badger.Txn) (err error) {
+		item, err := txn.Get([]byte(sessionPrefix + key.String()))
 		if err != nil {
 			return err
 		}
 		return item.Value(func(bytes []byte) (err error) {
-			uuid, err := decodeString(bytes)
+			uuid, err := decodeUUID(bytes)
 			if err != nil {
 				return err
 			}
@@ -44,21 +44,20 @@ func (s *SessionService) User(key string) (user *host.User, err error) {
 func (s *SessionService) Create(user *host.User) (session *host.Session, err error) {
 
 	// UUID
-	buuid, err := uuid.NewRandom()
+	key, err := uuid.NewRandom()
 	if err != nil {
 		return
 	}
-	uuid := buuid.String()
 
 	// User
-	b, err := encodeString(user.UUID)
+	value, err := encodeUUID(user.UUID)
 	if err != nil {
 		return
 	}
 
 	// Update
 	err = s.DB.Update(func(txn *badger.Txn) (err error) {
-		return txn.SetEntry(badger.NewEntry([]byte(sessionPrefix+uuid), b).WithTTL(sessionTTL))
+		return txn.SetEntry(badger.NewEntry([]byte(sessionPrefix+key.String()), value).WithTTL(sessionTTL))
 	})
 	if err != nil {
 		return
@@ -66,7 +65,7 @@ func (s *SessionService) Create(user *host.User) (session *host.Session, err err
 
 	// Session
 	session = &host.Session{
-		Key:  uuid,
+		Key:  key,
 		User: user.UUID,
 	}
 
@@ -95,6 +94,6 @@ func (s *SessionService) Refresh(old *host.Session) (session *host.Session, err 
 // Delete a session.
 func (s *SessionService) Delete(session *host.Session) (err error) {
 	return s.DB.Update(func(txn *badger.Txn) (err error) {
-		return txn.Delete([]byte(sessionPrefix + session.Key))
+		return txn.Delete([]byte(sessionPrefix + session.Key.String()))
 	})
 }

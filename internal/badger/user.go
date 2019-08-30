@@ -22,9 +22,9 @@ type UserService struct {
 const userPrefix = "user:"
 
 // User gets a user.
-func (s *UserService) User(uuid string) (user *host.User, err error) {
+func (s *UserService) User(uuid uuid.UUID) (user *host.User, err error) {
 	err = s.DB.View(func(txn *badger.Txn) error {
-		item, err := txn.Get([]byte(userPrefix + uuid))
+		item, err := txn.Get([]byte(userPrefix + uuid.String()))
 		if err != nil {
 			return err
 		}
@@ -74,13 +74,15 @@ func (s *UserService) Users() (users []*host.User, err error) {
 // Create a user.
 func (s *UserService) Create(user *host.User) (err error) {
 
+	var empty uuid.UUID
+
 	// UUID
-	if user.UUID == "" {
+	if user.UUID == empty {
 		buuid, err := uuid.NewRandom()
 		if err != nil {
 			return err
 		}
-		user.UUID = buuid.String()
+		user.UUID = buuid
 	}
 
 	// User
@@ -91,7 +93,7 @@ func (s *UserService) Create(user *host.User) (err error) {
 
 	// Update
 	return s.DB.Update(func(txn *badger.Txn) error {
-		return txn.Set([]byte(userPrefix+user.UUID), b)
+		return txn.Set([]byte(userPrefix+user.UUID.String()), b)
 	})
 }
 

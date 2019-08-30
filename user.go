@@ -11,7 +11,7 @@ type User struct {
 	GitHub *GitHubUser
 }
 
-// GitHubUser is a GitHub user.
+// GitHubUser groups a GitHub user's data in a single object.
 type GitHubUser struct {
 	github.User
 	github.AccessToken

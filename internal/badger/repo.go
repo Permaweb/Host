@@ -51,20 +51,14 @@ func (s *RepoService) Repos(user *host.User) (repos []*host.Repo, err error) {
 			// k := string(item.Key())
 			err := item.Value(func(v []byte) (err error) {
 
-				// UUID
-				uuid, err := decodeUUID(v)
-				if err != nil {
-					return err
-				}
-
 				// Repo
-				repo, err := s.Repo(uuid)
+				repo, err := decodeRepo(v)
 				if err != nil {
 					return err
 				}
 
 				// Repos
-				repos = append(repos, repo)
+				repos = append(repos, &repo)
 				return err
 			})
 			if err != nil {
@@ -78,19 +72,21 @@ func (s *RepoService) Repos(user *host.User) (repos []*host.Repo, err error) {
 
 // Owner gets a repo's owner.
 func (s *RepoService) Owner(repo *host.Repo) (user *host.User, err error) {
-	return s.UserService.User(repo.UUID.String())
+	return s.UserService.User(repo.Owner)
 }
 
 // Create a repo.
 func (s *RepoService) Create(repo *host.Repo) (err error) {
 
+	var empty uuid.UUID
+
 	// UUID
-	if repo.UUID == "" {
+	if repo.UUID == empty {
 		buuid, err := uuid.NewRandom()
 		if err != nil {
 			return err
 		}
-		repo.UUID = buuid.String()
+		repo.UUID = buuid
 	}
 
 	return s.Update(repo)
@@ -98,7 +94,14 @@ func (s *RepoService) Create(repo *host.Repo) (err error) {
 
 // Delete a repo.
 func (s *RepoService) Delete(repo *host.Repo) (err error) {
-	return
+	return s.DB.Update(func(txn *badger.Txn) (err error) {
+		err = txn.Delete([]byte(repoPrefix + repo.UUID.String()))
+		if err != nil {
+			return err
+		}
+
+		return txn.Delete([]byte(userPrefix + repo.Owner.String() + repoSuffix + repo.UUID.String()))
+	})
 }
 
 // Update a repo.
@@ -112,12 +115,12 @@ func (s *RepoService) Update(repo *host.Repo) (err error) {
 
 	// Update
 	return s.DB.Update(func(txn *badger.Txn) (err error) {
-		err = txn.Set([]byte(repoPrefix+repo.UUID), b)
+		err = txn.Set([]byte(repoPrefix+repo.UUID.String()), b)
 		if err != nil {
 			return err
 		}
 
 		// User
-		return txn.Set([]byte(userPrefix+repo.Owner+repoSuffix+repo.UUID), b)
+		return txn.Set([]byte(userPrefix+repo.Owner.String()+repoSuffix+repo.UUID.String()), b)
 	})
 }

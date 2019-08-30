@@ -11,7 +11,7 @@ type Repo struct {
 	IPNS      string // 5. Add it to IPNS
 
 	Owner   uuid.UUID // User
-	Service string
+	Service string    // Empty or a service constant.
 }
 
 // RepoService is a service that helps retreiving repos.

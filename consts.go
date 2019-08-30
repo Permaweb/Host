@@ -27,3 +27,8 @@ const (
 	pgPermaweb = "/dnsaddr/permaweb.io"
 	pgLibp2p   = "/dnsaddr/bootstrap.libp2p.io"
 )
+
+// List of supported Git hosts
+const (
+	serviceGitHub = "GitHub"
+)
